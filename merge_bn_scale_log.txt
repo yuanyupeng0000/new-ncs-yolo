@@ -1,0 +1,246 @@
+key:conv0
+merge layer conv0
+key:conv0/bn
+continue
+key:conv0/scale
+continue
+key:conv1/dw
+merge layer conv1/dw
+key:conv1/dw/bn
+continue
+key:conv1/dw/scale
+continue
+key:conv1
+merge layer conv1
+key:conv1/bn
+continue
+key:conv1/scale
+continue
+key:conv2/dw
+merge layer conv2/dw
+key:conv2/dw/bn
+continue
+key:conv2/dw/scale
+continue
+key:conv2
+merge layer conv2
+key:conv2/bn
+continue
+key:conv2/scale
+continue
+key:conv3/dw
+merge layer conv3/dw
+key:conv3/dw/bn
+continue
+key:conv3/dw/scale
+continue
+key:conv3
+merge layer conv3
+key:conv3/bn
+continue
+key:conv3/scale
+continue
+key:conv4/dw
+merge layer conv4/dw
+key:conv4/dw/bn
+continue
+key:conv4/dw/scale
+continue
+key:conv4
+merge layer conv4
+key:conv4/bn
+continue
+key:conv4/scale
+continue
+key:conv5/dw
+merge layer conv5/dw
+key:conv5/dw/bn
+continue
+key:conv5/dw/scale
+continue
+key:conv5
+merge layer conv5
+key:conv5/bn
+continue
+key:conv5/scale
+continue
+key:conv6/dw
+merge layer conv6/dw
+key:conv6/dw/bn
+continue
+key:conv6/dw/scale
+continue
+key:conv6
+merge layer conv6
+key:conv6/bn
+continue
+key:conv6/scale
+continue
+key:conv7/dw
+merge layer conv7/dw
+key:conv7/dw/bn
+continue
+key:conv7/dw/scale
+continue
+key:conv7
+merge layer conv7
+key:conv7/bn
+continue
+key:conv7/scale
+continue
+key:conv8/dw
+merge layer conv8/dw
+key:conv8/dw/bn
+continue
+key:conv8/dw/scale
+continue
+key:conv8
+merge layer conv8
+key:conv8/bn
+continue
+key:conv8/scale
+continue
+key:conv9/dw
+merge layer conv9/dw
+key:conv9/dw/bn
+continue
+key:conv9/dw/scale
+continue
+key:conv9
+merge layer conv9
+key:conv9/bn
+continue
+key:conv9/scale
+continue
+key:conv10/dw
+merge layer conv10/dw
+key:conv10/dw/bn
+continue
+key:conv10/dw/scale
+continue
+key:conv10
+merge layer conv10
+key:conv10/bn
+continue
+key:conv10/scale
+continue
+key:conv11/dw
+merge layer conv11/dw
+key:conv11/dw/bn
+continue
+key:conv11/dw/scale
+continue
+key:conv11
+merge layer conv11
+key:conv11/bn
+continue
+key:conv11/scale
+continue
+key:conv12/dw
+merge layer conv12/dw
+key:conv12/dw/bn
+continue
+key:conv12/dw/scale
+continue
+key:conv12
+merge layer conv12
+key:conv12/bn
+continue
+key:conv12/scale
+continue
+key:conv13/dw
+merge layer conv13/dw
+key:conv13/dw/bn
+continue
+key:conv13/dw/scale
+continue
+key:conv13
+merge layer conv13
+key:conv13/bn
+continue
+key:conv13/scale
+continue
+key:conv14_1
+merge layer conv14_1
+key:conv14_1/bn
+continue
+key:conv14_1/scale
+continue
+key:conv14_2
+merge layer conv14_2
+key:conv14_2/bn
+continue
+key:conv14_2/scale
+continue
+key:conv15_1
+merge layer conv15_1
+key:conv15_1/bn
+continue
+key:conv15_1/scale
+continue
+key:conv15_2
+merge layer conv15_2
+key:conv15_2/bn
+continue
+key:conv15_2/scale
+continue
+key:conv16_1
+merge layer conv16_1
+key:conv16_1/bn
+continue
+key:conv16_1/scale
+continue
+key:conv16_2
+merge layer conv16_2
+key:conv16_2/bn
+continue
+key:conv16_2/scale
+continue
+key:conv17_1
+merge layer conv17_1
+key:conv17_1/bn
+continue
+key:conv17_1/scale
+continue
+key:conv17_2
+merge layer conv17_2
+key:conv17_2/bn
+continue
+key:conv17_2/scale
+continue
+key:conv11_mbox_loc
+merge layer conv11_mbox_loc
+not need bn
+key:conv11_mbox_conf_new
+merge layer conv11_mbox_conf_new
+not need bn
+key:conv13_mbox_loc
+merge layer conv13_mbox_loc
+not need bn
+key:conv13_mbox_conf_new
+merge layer conv13_mbox_conf_new
+not need bn
+key:conv14_2_mbox_loc
+merge layer conv14_2_mbox_loc
+not need bn
+key:conv14_2_mbox_conf_new
+merge layer conv14_2_mbox_conf_new
+not need bn
+key:conv15_2_mbox_loc
+merge layer conv15_2_mbox_loc
+not need bn
+key:conv15_2_mbox_conf_new
+merge layer conv15_2_mbox_conf_new
+not need bn
+key:conv16_2_mbox_loc
+merge layer conv16_2_mbox_loc
+not need bn
+key:conv16_2_mbox_conf_new
+merge layer conv16_2_mbox_conf_new
+not need bn
+key:conv17_2_mbox_loc
+merge layer conv17_2_mbox_loc
+not need bn
+key:conv17_2_mbox_conf_new
+merge layer conv17_2_mbox_conf_new
+not need bn
