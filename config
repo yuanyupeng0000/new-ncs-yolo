@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "master"]
+	url = https://github.com/yuanyupeng0000/simple-files.git
+	fetch = +refs/heads/*:refs/remotes/master/*
+[branch "master"]
+  remote = master
+  merge = refs/heads/master
