@@ -1,0 +1,23 @@
+(darknet) load_net errorwrong type
+2018年05月30日 09:58:00 云雀_2017 阅读数：480
+
+issue description:
+
+/home/test/anaconda3/envs/yolo/bin/python /home/test/object_detection/darknet/examples/detector.py
+Traceback (most recent call last):
+  File "/home/test/object_detection/darknet/examples/detector.py", line 13, in <module>
+    net = dn.load_net("/home/test/object_detection/darknet/cfg/yolov3.cfg",b"/home/test/object_detection/darknet/yolov3.weights", 0)
+
+ctypes.ArgumentError: argument 1: <class 'TypeError'>: wrong type
+
+
+
+fix method:
+
+the <class 'TypeError'> is due the passing of string from python to c/c++ lib. just add 'b' before your string like load_net(b"/path/darknet/cfg/yolo-lines.cfg",b"/path/darknet/backup/yolo-lines_63000.weights", 0)
+
+For string variables use bytes(str_variable, encoding='utf-8')
+from: https://github.com/pjreddie/darknet/issues/241
+
+
+
