@@ -171,7 +171,7 @@ if __name__ == "__main__":
     images = os.listdir(images_dir)
 
     for image in images:
-        ret = image.endswith('.jpg')
+        ret = image.endswith('.png')
         if ret == True:
             image_file = images_dir + image
 
