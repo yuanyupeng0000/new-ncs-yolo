@@ -1,0 +1,13 @@
+this file describes how to make sample for object detection
+catglories：
+1.classes all in the coco
+1）use the yolov3 to generate the pre annotation sample (xml,image) with the unique index name, dir：/data/darknet/python/xml/
+2）make background, generate background image, dir: /data/darknet/python/background/
+3) replace background, generate the sample, dir: /data/darknet/python/image_replaced_bkg/; /data/darknet/python/xml_replaced_bkg
+4) 
+5) merge generated image and xml to VOCdevkit  
+
+2)-(1):make background manufacturely
+2)-(2):make background auto
+
+2.classes not all in the coco
