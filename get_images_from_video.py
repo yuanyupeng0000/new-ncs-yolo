@@ -41,7 +41,7 @@ def main():
         #cv2.imshow(cv_window_name, frame)
         
         # Press Q on keyboard to  exit
-        if cv2.waitKey(25) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     # When everything done, release the video capture object
