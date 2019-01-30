@@ -1,0 +1,14 @@
+#!/bin/bash
+date_time=`date "+%Y%m%d"`
+xml_dir=$date_time"_xml"
+image_dir=$date_time"_image"
+background_dir=$date_time"_background"
+mkdir $xml_dir
+mkdir $image_dir
+mkdir $background_dir
+
+rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$xml_dir/ $xml_dir/
+rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$image_dir/ $image_dir/
+rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$background_dir/ $background_dir/
+
+python3 /datasets/labelImg/labelImg.py

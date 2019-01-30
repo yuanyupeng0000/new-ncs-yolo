@@ -8,17 +8,17 @@ import sys, os
 #sys.path.insert(0,cv2_lib_avcodec)
 import cv2
 
-if(len(sys.argv) < 8):
-    print("please input data_file cfg_file weights_file save_start_index save_fram_gap images_dir and total_fram_num from cmdline by order!")
+if(len(sys.argv) < 5):
+    print("please input data_file cfg_file weights_file images_dir from cmdline by order!")
     exit(1)
-total_fram_num = int(sys.argv[7])
-images_dir = sys.argv[6]
+images_dir = sys.argv[4]
 data_file = sys.argv[1]
 cfg_file = sys.argv[2]
 weights_file = sys.argv[3]
-image_index_start = int(sys.argv[4])
-gap = int(sys.argv[5])
-image_index = image_index_start
+
+xml_dir = 'xml_' + images_dir
+os.system('mkdir -p ' + xml_dir)
+
 def sample(probs):
     s = sum(probs)
     probs = [a/s for a in probs]
@@ -158,11 +158,7 @@ predict_image.restype = POINTER(c_float)
 
 temp_index = 0
 if __name__ == "__main__":
-    #net = load_net("cfg/densenet201.cfg", "/home/pjreddie/trained/densenet201.weights", 0)
-    #im = load_image("data/wolf.jpg", 0, 0)
-    #meta = load_meta("cfg/imagenet1k.data")
-    #r = classify(net, meta, im)
-    #print r[:10]
+
     net = load_net(cfg_file, weights_file, 0)
     #net = load_net(b"/data/darknet/cfg/yolov3.cfg",b"/data/darknet/weights/yolov3.weights", 0)
     meta = load_meta(data_file)
@@ -171,103 +167,103 @@ if __name__ == "__main__":
     images = os.listdir(images_dir)
 
     for image in images:
-        ret = image.endswith('.png')
+        ret = image.endswith('.jpg')
         if ret == True:
             image_file = images_dir + image
 
-            if int(image_index%gap) == 0:
                 
-                #frame = frame[180:, 120:1720, :] #27.11.64.148_01_20180920120811979.mp4;
-                                                  
-                '''
-                img1 = frame[:180, :, :] #----------------
-                img2 = frame[:370, 1000:1350, :]
-                dst1 = cv2.blur(img1 , (16 ,32))
-                dst2 = cv2.blur(img2 , (16, 32))
-                frame[:180,:,:] = dst1
-                frame[:370, 1000:1350, :] = dst2 #27.11.64.149_01_20180920183555808.mp4
-                                                 
-                '''
-                '''
-                temp_index = temp_index +1
-                if(temp_index%3 == 1):
-                    img1 = frame[700:, :2048, :]
-                    frame = img1 #
-                elif(temp_index%3 == 2):
-                    img2 = frame[700:, 1024:3072, :]
-                    frame = img2 #guangzhou_high_sky
-                else:
-                    img3 = frame[700:, 2048:, :]
-                    frame = img3 #guangzhou_high_sky
-                '''
-                r = detect(net, meta, image_file)
+        #frame = frame[180:, 120:1720, :] #27.11.64.148_01_20180920120811979.mp4;
+                                          
+        '''
+        img1 = frame[:180, :, :] #----------------
+        img2 = frame[:370, 1000:1350, :]
+        dst1 = cv2.blur(img1 , (16 ,32))
+        dst2 = cv2.blur(img2 , (16, 32))
+        frame[:180,:,:] = dst1
+        frame[:370, 1000:1350, :] = dst2 #27.11.64.149_01_20180920183555808.mp4
+                                         
+        '''
+        '''
+        temp_index = temp_index +1
+        if(temp_index%3 == 1):
+            img1 = frame[700:, :2048, :]
+            frame = img1 #
+        elif(temp_index%3 == 2):
+            img2 = frame[700:, 1024:3072, :]
+            frame = img2 #guangzhou_high_sky
+        else:
+            img3 = frame[700:, 2048:, :]
+            frame = img3 #guangzhou_high_sky
+        '''
+        r = detect(net, meta, image_file)
 
-                origimg = cv2.imread(image_file)
-                height = origimg.shape[0]
-                width = origimg.shape[1]
-                depth = origimg.shape[2]
+        origimg = cv2.imread(image_file)
+        height = origimg.shape[0]
+        width = origimg.shape[1]
+        depth = origimg.shape[2]
 
-                xml_str = "<annotation>\n\t\
-                <folder>image</folder>\n\t\
-                <filename>" + image + "</filename>\n\t\
-                " + "<path>" + image_file + "</path>\n\t\
-                <source>\n\t\t\
-                <database>Unknown</database>\n\t\
-                </source>\n\t\
-                <size>\n\t\t\
-                <width>" + str(width) + "</width>\n\t\t\
-                <height>" + str(height) + "</height>\n\t\t\
-                <depth>" + str(depth) + "</depth>\n\t\
-                </size>\n\t\
-                <segmented>0</segmented>"
-                #print(xml_str)
+        xml_str = "<annotation>\n\t\
+        <folder>image</folder>\n\t\
+        <filename>" + image + "</filename>\n\t\
+        " + "<path>" + image_file + "</path>\n\t\
+        <source>\n\t\t\
+        <database>Unknown</database>\n\t\
+        </source>\n\t\
+        <size>\n\t\t\
+        <width>" + str(width) + "</width>\n\t\t\
+        <height>" + str(height) + "</height>\n\t\t\
+        <depth>" + str(depth) + "</depth>\n\t\
+        </size>\n\t\
+        <segmented>0</segmented>"
+        #print(xml_str)
+        found_flag = False
+        for i in range(len(r)):
+            cls = r[i][0]
+            #if(cls not in ['bus','car','truck', 'motorbike','bicycle','person']):
+            if(cls not in ['person', 'motorbike','bicycle']):
+                continue
+            found_flag = True
+            score = r[i][1]
+            bbox = r[i][2]
 
-                for i in range(len(r)):
-                    cls = r[i][0]
-                    if(cls not in ['bus','car','truck', 'motorbike','bicycle','person']):
-                        continue
-                    score = r[i][1]
-                    bbox = r[i][2]
+            x1 = max(0, (bbox[0] - bbox[2]/2))
+            y1 = max(0, (bbox[1] - bbox[3]/2))
+            x2 = min(width, (bbox[0] + bbox[2]/2))
+            y2 = min(height, (bbox[1] + bbox[3]/2))      
 
-                    x1 = max(0, (bbox[0] - bbox[2]/2))
-                    y1 = max(0, (bbox[1] - bbox[3]/2))
-                    x2 = min(width, (bbox[0] + bbox[2]/2))
-                    y2 = min(height, (bbox[1] + bbox[3]/2))      
+            p1 = (int(x1), int(y1))
+            p2 = (int(x2), int(y2))
 
-                    p1 = (int(x1), int(y1))
-                    p2 = (int(x2), int(y2))
+            obj_str = "\n\t\
+            <object>\n\t\t\
+            <name>" + cls + "</name>\n\t\t\
+            <pose>Unspecified</pose>\n\t\t\
+            <truncated>0</truncated>\n\t\t\
+            <difficult>0</difficult>\n\t\t\
+            <bndbox>\n\t\t\t\
+            <xmin>" + str(int(x1)) + "</xmin>\n\t\t\t\
+            <ymin>" + str(int(y1)) + "</ymin>\n\t\t\t\
+            <xmax>" + str(int(x2)) + "</xmax>\n\t\t\t\
+            <ymax>" + str(int(y2)) + "</ymax>\n\t\t\
+            </bndbox>\n\t\
+            </object>"
 
-                    obj_str = "\n\t\
-                    <object>\n\t\t\
-                    <name>" + cls + "</name>\n\t\t\
-                    <pose>Unspecified</pose>\n\t\t\
-                    <truncated>0</truncated>\n\t\t\
-                    <difficult>0</difficult>\n\t\t\
-                    <bndbox>\n\t\t\t\
-                    <xmin>" + str(int(x1)) + "</xmin>\n\t\t\t\
-                    <ymin>" + str(int(y1)) + "</ymin>\n\t\t\t\
-                    <xmax>" + str(int(x2)) + "</xmax>\n\t\t\t\
-                    <ymax>" + str(int(y2)) + "</ymax>\n\t\t\
-                    </bndbox>\n\t\
-                    </object>"
+            xml_str += obj_str
 
-                    xml_str += obj_str
+            cv2.rectangle(origimg, p1, p2, (0,255,0))
+            p3 = (max(p1[0], 15), max(p1[1], 15))
+            title = "%s:%.2f" % (cls, score)
+            cv2.putText(origimg, title, p3, cv2.FONT_ITALIC, 0.6, (0, 255, 0), 1)
+        xml_str += "\n</annotation>"
+        if (not found_flag):
+            continue
+        fileObject = open(xml_dir + image[:-4] + '.xml', 'w')  
+        fileObject.write(xml_str)
+        fileObject.close()
+        print("Created : " + xml_dir + image[:-4] + '.xml')
 
-                    cv2.rectangle(origimg, p1, p2, (0,255,0))
-                    p3 = (max(p1[0], 15), max(p1[1], 15))
-                    title = "%s:%.2f" % (cls, score)
-                    cv2.putText(origimg, title, p3, cv2.FONT_ITALIC, 0.6, (0, 255, 0), 1)
-                xml_str += "\n</annotation>"
-                fileObject = open("xml/" + image[:-4] + '.xml', 'w')  
-                fileObject.write(xml_str)   
-                fileObject.close()
-                print("Created : " + str(image_index_start + (image_index-image_index_start)/gap))
-                if((int(image_index) - int(image_index_start))/gap == total_fram_num):
-                    print('Got ' + str(total_fram_num) +' samples')
-                    break;
-                #print(xml_str)
-                #cv2.imshow("yolov3", origimg)
-                # Press Q on keyboard to  exit
-                if cv2.waitKey(5) & 0xFF == ord('q'):
-                    break
-            image_index = image_index + 1
+        #print(xml_str)
+        #cv2.imshow("yolov3", origimg)
+        # Press Q on keyboard to  exit
+        if cv2.waitKey(5) & 0xFF == ord('q'):
+            break
