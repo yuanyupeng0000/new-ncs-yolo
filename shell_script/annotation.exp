@@ -5,6 +5,7 @@ set hostno [lindex $argv 1]
 set video [lindex $argv 2]
 set PATH $env(PATH)
 set LD_LIBRARY_PATH $env(LD_LIBRARY_PATH)
+
 spawn scp $video $name@$hostno:/video/
 expect "*password*"
 send "$name\r"
