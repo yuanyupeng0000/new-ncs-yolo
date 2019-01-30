@@ -2,14 +2,21 @@
 set timeout 5    
 set name [lindex $argv 0]
 set hostno [lindex $argv 1]
-spawn ssh $hostno -l $name  
+set video [lindex $argv 2]
+set PATH $env(PATH)
+set LD_LIBRARY_PATH $env(LD_LIBRARY_PATH)
+spawn scp $video $name@$hostno:/video/
+expect "*password*"
+send "$name\r"
+interact
+    
+spawn ssh root@$hostno "sudo env PATH=$PATH LD_LIBRARY_PATH=$LD_LIBRARY_PATH python /opt/yyp-darknet/darknet/python/truncated_get_xml_and_background_6cls_important_car.py /opt/yyp-darknet/darknet/python/cfg/coco.data /opt/yyp-darknet/darknet/python/cfg/yolov3-nob-608.cfg /opt/yyp-darknet/weights/header_int_aaa_yolov3.weights 670000 15 $video 100"    
 expect "*password*"    
-send "$name\r"    
-spawn ssh $hostno -l root "ls >> /opt/xxoo.txt"    
-expect "*password*"    
-send "$name\r"    
+send "$name\r"
+interact    
 spawn ssh root@$hostno "chmod 744 /opt/xxoo.txt"    
 expect "*password*"    
-send "$name\r"    
+send "$name\r"
+    
 expect eof    
 
