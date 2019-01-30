@@ -1,14 +1,21 @@
-#!/bin/bash
-date_time=`date "+%Y%m%d"`
-xml_dir=$date_time"_xml"
-image_dir=$date_time"_image"
-background_dir=$date_time"_background"
-mkdir $xml_dir
-mkdir $image_dir
-mkdir $background_dir
+#!/usr/bin/expect    
+set timeout 5    
+set date_time [lindex $argv 0]
+set xml_dir [lindex $argv 1]
+set image_dir [lindex $argv 2]
+set background_dir [lindex $argv 3]
 
-rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$xml_dir/ $xml_dir/
-rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$image_dir/ $image_dir/
-rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$background_dir/ $background_dir/
+spawn rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$xml_dir/ /data/darknet/python/$xml_dir/    
+expect "*password*"    
+send "root\r"
+interact
 
-python3 /datasets/labelImg/labelImg.py
+spawn rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$image_dir/ /data/darknet/python/$image_dir/
+expect "*password*"    
+send "root\r"
+interact
+
+spawn rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$background_dir/ /data/darknet/python/$background_dir/
+expect "*password*"    
+send "root\r"
+interact
