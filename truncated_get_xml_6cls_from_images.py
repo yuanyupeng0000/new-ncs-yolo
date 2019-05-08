@@ -87,7 +87,7 @@ def detect(net, meta, image, thresh=.5, hier_thresh=.5, nms=.45):
     free_detections(dets, num)
     return res
 #lib = CDLL("/home/pjreddie/documents/darknet/libdarknet.so", RTLD_GLOBAL)
-lib = CDLL("libdarknet.so", RTLD_GLOBAL)
+lib = CDLL("/data/darknet/libdarknet.so", RTLD_GLOBAL)
 lib.network_width.argtypes = [c_void_p]
 lib.network_width.restype = c_int
 lib.network_height.argtypes = [c_void_p]
@@ -220,7 +220,7 @@ if __name__ == "__main__":
         for i in range(len(r)):
             cls = r[i][0]
             #if(cls not in ['bus','car','truck', 'motorbike','bicycle','person']):
-            if(cls not in ['person', 'motorbike','bicycle']):
+            if(cls not in ['person', 'motorbike','bicycle', 'car', 'bus', 'truck']):
                 continue
             found_flag = True
             score = r[i][1]
@@ -265,5 +265,5 @@ if __name__ == "__main__":
         #print(xml_str)
         #cv2.imshow("yolov3", origimg)
         # Press Q on keyboard to  exit
-        if cv2.waitKey(5) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break

@@ -4,6 +4,7 @@ import numpy
 import cv2
 import sys
 import time
+import os
 
 if(len(sys.argv) < 4):
     print('please input start_index, fram_gap, video_file, save_dir from command line by order')
@@ -12,6 +13,8 @@ video_file = sys.argv[3]
 start_index = int(sys.argv[1])
 gap = int(sys.argv[2])
 save_dir = sys.argv[4]
+
+os.system("mkdir " + save_dir)
 
 def main():
     cv_window_name = "SSD MobileNet - hit key 'q' to exit"
@@ -33,7 +36,7 @@ def main():
             if int(image_index%gap) == 0:
                 #cropImg = frame[0:240, 160:480]
                 #img = cv2.resize(cropImg, (640,480))
-                cv2.imwrite(save_dir + '/' + str(start_index + (image_index-start_index)/gap).zfill(12) + ".jpg", frame)
+                cv2.imwrite(save_dir + '/' + str(start_index + (image_index-start_index)/gap).zfill(11) + ".jpg", frame)
         image_index = image_index + 1
         #cv2.HoughLinesP
         #cv2.namedWindow("SSD-Mobilenet",0)
