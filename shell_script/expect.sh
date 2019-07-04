@@ -18,5 +18,7 @@ mkdir -p $top_path$background_dir
 
 ./rsync_xml_and_image_fit_server.exp $date_time $xml_dir $image_dir $background_dir
 
+python3 /datasets/labelImg/labelImg.py $image_dir &
+
 
 

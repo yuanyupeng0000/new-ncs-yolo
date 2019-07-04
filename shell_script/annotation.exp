@@ -6,12 +6,12 @@ set video [lindex $argv 2]
 set PATH $env(PATH)
 set LD_LIBRARY_PATH $env(LD_LIBRARY_PATH)
 
-spawn scp $video $name@$hostno:/video/
+spawn scp $video $name@$hostno:/alg/video/
 expect "*password*"
 send "$name\r"
 interact
     
-spawn ssh root@$hostno "sudo env PATH=$PATH LD_LIBRARY_PATH=$LD_LIBRARY_PATH python /opt/yyp-darknet/darknet/python/truncated_get_xml_and_background_6cls_important_person.py /opt/yyp-darknet/darknet/python/cfg/coco.data /opt/yyp-darknet/darknet/python/cfg/yolov3-nob-608.cfg /opt/yyp-darknet/weights/header_int_aaa_yolov3.weights 2100600 15 $video 100"    
+spawn ssh root@$hostno "sudo env PATH=$PATH LD_LIBRARY_PATH=$LD_LIBRARY_PATH python /alg/yyp-darknet/darknet/python/truncated_get_xml_6cls_.py /alg/yyp-darknet/darknet/python/cfg/coco.data /alg/yyp-darknet/darknet/python/cfg/yolov3-nob-608.cfg /alg/yyp-darknet/darknet/weights/header_int_aaa_yolov3.weights 9990000 15 /alg/video/$video 100"    
 expect "*password*"    
 send "$name\r"
 interact

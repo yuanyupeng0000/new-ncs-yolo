@@ -5,17 +5,17 @@ set xml_dir [lindex $argv 1]
 set image_dir [lindex $argv 2]
 set background_dir [lindex $argv 3]
 
-spawn rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$xml_dir/ /data/darknet/python/$xml_dir/    
+spawn rsync -avz --delete root@192.168.1.219:/alg/yyp-darknet/darknet/python/$xml_dir/ /data/darknet/python/$xml_dir/    
 expect "*password*"    
 send "root\r"
 interact
 
-spawn rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$image_dir/ /data/darknet/python/$image_dir/
+spawn rsync -avz --delete root@192.168.1.219:/alg/yyp-darknet/darknet/python/$image_dir/ /data/darknet/python/$image_dir/
 expect "*password*"    
 send "root\r"
 interact
 
-spawn rsync -avz --delete root@192.168.1.219:/opt/yyp-darknet/darknet/python/$background_dir/ /data/darknet/python/$background_dir/
+spawn rsync -avz --delete root@192.168.1.219:/alg/yyp-darknet/darknet/python/$background_dir/ /data/darknet/python/$background_dir/
 expect "*password*"    
 send "root\r"
 interact
