@@ -19,3 +19,4 @@ spawn rsync -avz --delete root@192.168.1.219:/alg/yyp-darknet/darknet/python/$ba
 expect "*password*"    
 send "root\r"
 interact
+
