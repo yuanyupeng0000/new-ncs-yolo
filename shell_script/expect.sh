@@ -1,9 +1,11 @@
 #!/bin/bash
 video=$1
+startid=$2
+video_=$3
 ip="192.168.1.219"
 name="root"
 
-./annotation.exp $name $ip $video
+./annotation.exp $name $ip $video $startid $video_
 
 #---------------------------------------------------------------------------
 
