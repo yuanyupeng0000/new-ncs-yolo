@@ -7,7 +7,7 @@ import time
 import os
 
 video_list = []
-def search(root, target='.264'): 
+def search(root, target='.ps'): 
     file_list = []
     items = os.listdir(root) 
     for item in items: 
@@ -22,12 +22,14 @@ def search(root, target='.264'):
             print('[!]', path)
 
 if(len(sys.argv) < 4):
-    print('please input start_index, fram_gap, video_dir, save_dir from command line by order')
+    print('please input start_index, fram_gap, video_dir, save_dir , total_frame_per_video, from command line by order')
     exit(1)
 video_dir = sys.argv[3]
 start_index = int(sys.argv[1])
 gap = int(sys.argv[2])
 save_dir = sys.argv[4]
+os.system('mkdir -p ' + save_dir)
+total_frame_per_video = sys.argv[5]
 
 os.system("mkdir " + save_dir)
 
@@ -36,6 +38,9 @@ def main():
     print('find video : {0}'.format(len(video_list)))
     image_index = start_index
     for video_file in video_list:
+        '''video_time_stamp = int((video_file.split('/')[-1])[:2])
+        if(video_time_stamp < 17):
+            continue'''
         print(video_file)
         loop = 0
         cap = cv2.VideoCapture(video_file)
@@ -50,13 +55,16 @@ def main():
         # Capture frame-by-frame
             ret, frame = cap.read()
             loop = loop + 1
-            if(loop/gap == 1000):
+            if(int(loop/gap) == int(total_frame_per_video)):
                 break
             if ret == True:
                 if int(image_index%gap) == 0:
                     #cropImg = frame[0:240, 160:480]
                     #img = cv2.resize(cropImg, (640,480))
-                    cv2.imwrite(save_dir + '/' + str(int(start_index + (image_index-start_index)/gap)).zfill(11) + ".jpg", frame)
+                    save_name = save_dir + '/' + video_dir.split('/')[-1] + (video_file.split('/')[-1])[:-4] + str(int(start_index + (image_index-start_index)/gap)) + ".jpg"
+                    save_name = save_name.replace(' ','')
+                    print('save_name:{0}'.format(save_name))
+                    cv2.imwrite(save_name, frame)
                     print('Created {0}'.format(int(start_index + (image_index-start_index)/gap)))
                 image_index = image_index + 1
                 continue
