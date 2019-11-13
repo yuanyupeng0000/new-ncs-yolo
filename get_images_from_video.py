@@ -7,7 +7,7 @@ import time
 import os
 
 video_list = []
-def search(root, target='.ps'): 
+def search(root, target='.ts'): 
     file_list = []
     items = os.listdir(root) 
     for item in items: 
