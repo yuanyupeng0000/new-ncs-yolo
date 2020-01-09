@@ -2827,21 +2827,6 @@ static HI_S32 SAMPLE_SVP_NNIE_Yolov3_Tiny_SoftwareInit(SAMPLE_SVP_NNIE_CFG_S* ps
     pstSoftWareParam->af32Bias1[4] = 150;
     pstSoftWareParam->af32Bias1[5] = 150;
 
-    /*pstSoftWareParam->af32Bias[1][0] = 10;
-    pstSoftWareParam->af32Bias[1][1] = 25;
-    pstSoftWareParam->af32Bias[1][2] = 20;
-    pstSoftWareParam->af32Bias[1][3] = 50;
-    pstSoftWareParam->af32Bias[1][4] = 30;
-    pstSoftWareParam->af32Bias[1][5] = 75;
-
-    pstSoftWareParam->af32Bias[0][0] = 50;
-    pstSoftWareParam->af32Bias[0][1] = 125;
-    pstSoftWareParam->af32Bias[0][2] = 80;
-    pstSoftWareParam->af32Bias[0][3] = 200;
-    pstSoftWareParam->af32Bias[0][4] = 150;
-    pstSoftWareParam->af32Bias[0][5] = 150;*/
-
-
     /*Malloc assist buffer memory*/
     u32ClassNum = pstSoftWareParam->u32ClassNum;
     u32BboxNum = pstSoftWareParam->u32BboxNumEachGrid*pstSoftWareParam->u32GridNumHeight*
@@ -2924,13 +2909,13 @@ static HI_S32 SAMPLE_SVP_NNIE_Yolov3_Tiny_SoftwareInit_(SAMPLE_SVP_NNIE_CFG_S* p
     pstSoftWareParam->u32ClassNum = 7; //
     pstSoftWareParam->u32GridNumHeight = 52;
     pstSoftWareParam->u32GridNumWidth = 52;
-    pstSoftWareParam->u32GridNumHeightArray[1] = 52;
-    pstSoftWareParam->u32GridNumWidthArray[1] = 52;
-    pstSoftWareParam->u32GridNumHeightArray[0] = 26;
-    pstSoftWareParam->u32GridNumWidthArray[0] = 26;
-    pstSoftWareParam->u32NmsThresh = (HI_U32)(0.99f*SAMPLE_SVP_NNIE_QUANT_BASE);
-    pstSoftWareParam->u32ConfThresh = (HI_U32)(0.5f*SAMPLE_SVP_NNIE_QUANT_BASE);
-    pstSoftWareParam->u32MaxRoiNum = 50;
+    pstSoftWareParam->u32GridNumHeightArray[1] = 26;
+    pstSoftWareParam->u32GridNumWidthArray[1] = 26;
+    pstSoftWareParam->u32GridNumHeightArray[0] = 13;
+    pstSoftWareParam->u32GridNumWidthArray[0] = 13;
+    pstSoftWareParam->u32NmsThresh = (HI_U32)(0.45f*SAMPLE_SVP_NNIE_QUANT_BASE);
+    pstSoftWareParam->u32ConfThresh = (HI_U32)(0.25f*SAMPLE_SVP_NNIE_QUANT_BASE);
+    pstSoftWareParam->u32MaxRoiNum = 30;
     pstSoftWareParam->af32Bias2[0] = 10;
     pstSoftWareParam->af32Bias2[1] = 25;
     pstSoftWareParam->af32Bias2[2] = 20;
@@ -3348,8 +3333,9 @@ SSD_FAIL_0:
 ******************************************************************************/
 void hisi_3519av100_nnie_detect_yolov3_tiny(void){
 
-    //HI_CHAR *pcSrcFile = "./data/nnie_image/rgb_planar/street_cars_416x416.bgr";
-    HI_CHAR *pcSrcFile = "./many_car_416_416.bgr";
+    HI_CHAR *pcSrcFile = "./data/nnie_image/rgb_planar/street_cars_416x416.bgr";
+    //HI_CHAR *pcSrcFile = "./many_car_416_416.bgr";
+    //HI_CHAR *pcSrcFile = "./dog_bike_car_416.bgr";
     HI_FLOAT f32PrintResultThresh = 0.0f;
     HI_S32 s32Ret = HI_SUCCESS;
     SAMPLE_SVP_NNIE_INPUT_DATA_INDEX_S stInputDataIdx = {0};
@@ -3409,15 +3395,16 @@ TINY_YOLOV3_FAIL_0:
 ******************************************************************************/
 void hisi_3519av100_nnie_detect_yolov3(void){
 
-    HI_CHAR *pcSrcFile = "./data/nnie_image/rgb_planar/street_cars_416x416.bgr";
+    //HI_CHAR *pcSrcFile = "./data/nnie_image/rgb_planar/street_cars_416x416.bgr";
     //HI_CHAR *pcSrcFile = "./many_car_416_416.bgr";
+    HI_CHAR *pcSrcFile = "./dog_bike_car_416.bgr";
     HI_FLOAT f32PrintResultThresh = 0.3f;
     HI_S32 s32Ret = HI_SUCCESS;
     SAMPLE_SVP_NNIE_INPUT_DATA_INDEX_S stInputDataIdx = {0};
     SAMPLE_SVP_NNIE_PROCESS_SEG_INDEX_S stProcSegIdx = {0};
     SAMPLE_SVP_NNIE_CFG_S   stNnieCfg = {0};
 
-    f32PrintResultThresh = 0.1f;
+    f32PrintResultThresh = 0.3f;
     stNnieCfg.pszPic= pcSrcFile;
 
     /*Fill src data*/
@@ -3487,6 +3474,7 @@ void SAMPLE_SVP_NNIE_YOLOV3_TINY_LOOP_SPLIT(void)
         hisi_3519av100_nnie_detect_yolov3_tiny();
         gettimeofday(&time_end, NULL);
         printf("arith detect time =%f\n", time_end.tv_sec - time_start.tv_sec + (time_end.tv_usec - time_start.tv_usec)/1000000.0);
+        //break;
     }
 }
 
@@ -3502,6 +3490,7 @@ void SAMPLE_SVP_NNIE_YOLOV3_LOOP_SPLIT(void)
         hisi_3519av100_nnie_detect_yolov3();
         gettimeofday(&time_end, NULL);
         printf("arith detect time =%f\n", time_end.tv_sec - time_start.tv_sec + (time_end.tv_usec - time_start.tv_usec)/1000000.0);
+        //break;
     }
 }
 
